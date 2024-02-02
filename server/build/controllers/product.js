@@ -16,11 +16,58 @@ exports.getProductAnalytics = exports.getAllProducts = void 0;
 const asyncHandler_1 = require("../utils/asyncHandler");
 const product_1 = __importDefault(require("../models/product"));
 const ApiResponse_1 = require("../utils/ApiResponse");
+const order_1 = __importDefault(require("../models/order"));
 exports.getAllProducts = (0, asyncHandler_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const products = yield product_1.default.find();
     return res.status(200).json(new ApiResponse_1.ApiResponse(200, "users", products, true));
 }));
 exports.getProductAnalytics = (0, asyncHandler_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const products = yield product_1.default.find();
-    return res.status(200).json(new ApiResponse_1.ApiResponse(200, "users", products, true));
+    const topFiveSellingProducts = yield order_1.default.aggregate([
+        {
+            $unwind: "$products"
+        },
+        {
+            $group: {
+                _id: "$products.id",
+                totalSales: {
+                    $sum: "$total",
+                },
+                title: {
+                    $first: "$products.title"
+                }
+            }
+        },
+        {
+            $sort: {
+                "totalSales": -1
+            }
+        },
+        {
+            $limit: 5
+        }
+    ]);
+    const productsByStocks = yield product_1.default.aggregate([
+        {
+            $project: {
+                stock: 1,
+                title: 1,
+                thumbnail: 1
+            }
+        }
+    ]);
+    const totalProducts = yield product_1.default.countDocuments();
+    const totalCategories = yield product_1.default.aggregate([{
+            $group: {
+                _id: "$category"
+            },
+        }, {
+            $count: "totalCategories"
+        }]);
+    const analytics = {
+        topFiveSellingProducts,
+        productsByStocks,
+        totalProducts,
+        totalCategories: totalCategories[0].totalCategories
+    };
+    return res.status(200).json(new ApiResponse_1.ApiResponse(200, "Product analytics", analytics, true));
 }));

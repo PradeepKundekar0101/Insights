@@ -62,13 +62,35 @@ export const getAllOrderAnalytics = asyncHandler(async(req:Request,res:Response)
         }
       ]);
     const totalUsers = await User.countDocuments();
+    const salesPerProduct = await Order.aggregate([
+        {
+          $unwind: "$products"
+          },
+        {
+          $group: {
+            _id: "$products.id",
+            totalSales: {
+              $sum:"$total",
+            },
+             title: {
+              $first: "$products.title"
+            }
+          }
+          },
+        {
+          $sort: {
+            "totalSales": -1
+          }
+        }
+      ])
+      
     const analytics={
         totalSales:totalSales[0].totalSales,
         totalDiscountedSales:totalDiscountedSales[0].totalDiscountedSales,
         totalOrders:totalOrders[0].totalOrders,
         averageOrderValue:averageOrderValue[0].averageOrderValue,
-        conversionRate: (totalUniqueOrders[0].totalUniqueOrders/totalUsers)*100
-        
+        conversionRate: (totalUniqueOrders[0].totalUniqueOrders/totalUsers)*100,
+        salesPerProduct
     }
     return res.status(200).json(new ApiResponse(200,"carts",{...analytics,netSales:analytics.totalSales-analytics.totalDiscountedSales},true));
 })

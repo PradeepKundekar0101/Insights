@@ -74,12 +74,34 @@ exports.getAllOrderAnalytics = (0, asyncHandler_1.asyncHandler)((req, res) => __
         }
     ]);
     const totalUsers = yield user_1.default.countDocuments();
+    const salesPerProduct = yield order_2.default.aggregate([
+        {
+            $unwind: "$products"
+        },
+        {
+            $group: {
+                _id: "$products.id",
+                totalSales: {
+                    $sum: "$total",
+                },
+                title: {
+                    $first: "$products.title"
+                }
+            }
+        },
+        {
+            $sort: {
+                "totalSales": -1
+            }
+        }
+    ]);
     const analytics = {
         totalSales: totalSales[0].totalSales,
         totalDiscountedSales: totalDiscountedSales[0].totalDiscountedSales,
         totalOrders: totalOrders[0].totalOrders,
         averageOrderValue: averageOrderValue[0].averageOrderValue,
-        conversionRate: (totalUniqueOrders[0].totalUniqueOrders / totalUsers) * 100
+        conversionRate: (totalUniqueOrders[0].totalUniqueOrders / totalUsers) * 100,
+        salesPerProduct
     };
     return res.status(200).json(new ApiResponse_1.ApiResponse(200, "carts", Object.assign(Object.assign({}, analytics), { netSales: analytics.totalSales - analytics.totalDiscountedSales }), true));
 }));
