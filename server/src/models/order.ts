@@ -1,6 +1,6 @@
 import { Document, Schema, model } from 'mongoose';
 
-interface ICartItem extends Document {
+interface IOrderItem extends Document {
   id: number;
   products: {
     id: number;
@@ -19,7 +19,7 @@ interface ICartItem extends Document {
   totalQuantity: number;
 }
 
-const CartItemSchema = new Schema<ICartItem>({
+const OrderSchema = new Schema<IOrderItem>({
   id: { type: Number, required: true },
   products: [
     {
@@ -41,6 +41,6 @@ const CartItemSchema = new Schema<ICartItem>({
 });
 
 
-const CartItem = model<ICartItem>('CartItem', CartItemSchema);
+const Order = model<IOrderItem>('Order', OrderSchema);
 
-export default CartItem;
+export default Order;

@@ -16,11 +16,38 @@ exports.getUserAnalytics = exports.getAllUsers = void 0;
 const asyncHandler_1 = require("../utils/asyncHandler");
 const user_1 = __importDefault(require("../models/user"));
 const ApiResponse_1 = require("../utils/ApiResponse");
+// import aggregrationPipe from "../services/pipelines/userAnalytics";
 exports.getAllUsers = (0, asyncHandler_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const users = yield user_1.default.find();
     return res.status(200).json(new ApiResponse_1.ApiResponse(200, "users", users, true));
 }));
 exports.getUserAnalytics = (0, asyncHandler_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const users = yield user_1.default.find();
-    return res.status(200).json(new ApiResponse_1.ApiResponse(200, "users", users, true));
+    const totalUsers = yield user_1.default.countDocuments();
+    const genderDistribution = yield user_1.default.aggregate([
+        {
+            $group: {
+                _id: "$gender",
+                count: {
+                    $sum: 1
+                }
+            }
+        }
+    ]);
+    const ageDistribution = yield user_1.default.aggregate([
+        { $group: {
+                _id: "$age",
+                count: {
+                    $sum: 1
+                }
+            } }
+    ]);
+    const averageAge = yield user_1.default.aggregate([
+        { $group: {
+                _id: null,
+                data: {
+                    $avg: "$age"
+                }
+            } }
+    ]);
+    return res.status(200).json(new ApiResponse_1.ApiResponse(200, "users", { totalUsers, genderDistribution, ageDistribution, averageAge }, true));
 }));
