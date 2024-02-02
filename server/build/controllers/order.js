@@ -16,11 +16,70 @@ exports.getAllOrderAnalytics = exports.getAllOrders = void 0;
 const asyncHandler_1 = require("../utils/asyncHandler");
 const order_1 = __importDefault(require("../models/order"));
 const ApiResponse_1 = require("../utils/ApiResponse");
+const order_2 = __importDefault(require("../models/order"));
+const user_1 = __importDefault(require("../models/user"));
 exports.getAllOrders = (0, asyncHandler_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const orders = yield order_1.default.find();
     return res.status(200).json(new ApiResponse_1.ApiResponse(200, "carts", orders, true));
 }));
 exports.getAllOrderAnalytics = (0, asyncHandler_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const orders = yield order_1.default.find();
-    return res.status(200).json(new ApiResponse_1.ApiResponse(200, "carts", orders, true));
+    const totalSales = yield order_2.default.aggregate([
+        {
+            $group: {
+                _id: null,
+                totalSales: {
+                    $sum: "$total"
+                }
+            }
+        }
+    ]);
+    const totalDiscountedSales = yield order_2.default.aggregate([
+        {
+            $group: {
+                _id: null,
+                totalDiscountedSales: {
+                    $sum: "$discountedTotal"
+                }
+            }
+        }
+    ]);
+    const totalOrders = yield order_2.default.aggregate([
+        {
+            $group: {
+                _id: null,
+                totalOrders: {
+                    $sum: 1
+                }
+            }
+        }
+    ]);
+    const averageOrderValue = yield order_2.default.aggregate([
+        {
+            $group: {
+                _id: null,
+                averageOrderValue: {
+                    $avg: "$total"
+                }
+            }
+        }
+    ]);
+    const totalUniqueOrders = yield order_2.default.aggregate([
+        {
+            $group: {
+                _id: "$userId",
+            }
+        },
+        {
+            $count: 'totalUniqueOrders'
+        }
+    ]);
+    const totalUsers = yield user_1.default.countDocuments();
+    const analytics = {
+        totalSales: totalSales[0].totalSales,
+        totalDiscountedSales: totalDiscountedSales[0].totalDiscountedSales,
+        totalOrders: totalOrders[0].totalOrders,
+        averageOrderValue: averageOrderValue[0].averageOrderValue,
+        conversionRate: (totalUniqueOrders[0].totalUniqueOrders / totalUsers) * 100
+    };
+    return res.status(200).json(new ApiResponse_1.ApiResponse(200, "carts", Object.assign(Object.assign({}, analytics), { netSales: analytics.totalSales - analytics.totalDiscountedSales }), true));
 }));
