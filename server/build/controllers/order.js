@@ -91,7 +91,7 @@ exports.getAllOrderAnalytics = (0, asyncHandler_1.asyncHandler)((req, res) => __
         },
         {
             $sort: {
-                "totalSales": -1
+                "totalSales": 1
             }
         }
     ]);

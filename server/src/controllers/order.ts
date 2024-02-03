@@ -79,7 +79,7 @@ export const getAllOrderAnalytics = asyncHandler(async(req:Request,res:Response)
           },
         {
           $sort: {
-            "totalSales": -1
+            "totalSales": 1
           }
         }
       ])
