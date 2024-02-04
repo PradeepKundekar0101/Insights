@@ -34,6 +34,9 @@ exports.getProductAnalytics = (0, asyncHandler_1.asyncHandler)((req, res) => __a
                 },
                 title: {
                     $first: "$products.title"
+                },
+                thumbnail: {
+                    $first: "$products.thumbnail"
                 }
             }
         },

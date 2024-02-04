@@ -37,5 +37,5 @@ export const getUserAnalytics = asyncHandler(async(req:Request,res:Response)=>{
             }
         }}
     ])
-    return res.status(200).json(new ApiResponse(200,"users",{totalUsers,genderDistribution,ageDistribution,averageAge},true));
+    return res.status(200).json(new ApiResponse(200,"users",{totalUsers,genderDistribution,ageDistribution,averageAge:averageAge[0].data},true));
 })

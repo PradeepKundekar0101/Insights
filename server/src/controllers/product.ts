@@ -23,7 +23,10 @@ export const getProductAnalytics = asyncHandler(async(req:Request,res:Response)=
             },
              title: {
               $first: "$products.title"
-            }
+            },
+              thumbnail:{
+                $first:"$products.thumbnail"
+              }
           }
           },
         {

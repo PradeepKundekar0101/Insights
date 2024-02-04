@@ -49,5 +49,5 @@ exports.getUserAnalytics = (0, asyncHandler_1.asyncHandler)((req, res) => __awai
                 }
             } }
     ]);
-    return res.status(200).json(new ApiResponse_1.ApiResponse(200, "users", { totalUsers, genderDistribution, ageDistribution, averageAge }, true));
+    return res.status(200).json(new ApiResponse_1.ApiResponse(200, "users", { totalUsers, genderDistribution, ageDistribution, averageAge: averageAge[0].data }, true));
 }));

@@ -11,4 +11,43 @@ export interface SalesData {
       }>;
       netSales: number;
 }
-  
+
+interface GenderDistribution {
+  _id: "female" | "male";
+  count: number;
+}
+
+
+export interface UserData {
+  totalUsers: number;
+  genderDistribution: GenderDistribution[];
+  ageDistribution: {
+    _id: string;
+    count: number;
+  }[],
+  averageAge: number;
+}
+
+
+interface TopSellingProduct {
+  _id: number;
+  totalSales: number;
+  thumbnail:string;
+  title: string;
+}
+
+interface ProductByStock {
+  _id: string;
+  title: string;
+  stock: number;
+  thumbnail: string;
+}
+
+interface ProductData {
+  topFiveSellingProducts: TopSellingProduct[];
+  productsByStocks: ProductByStock[];
+  totalProducts: number;
+  totalCategories: number;
+}
+
+export default ProductData;

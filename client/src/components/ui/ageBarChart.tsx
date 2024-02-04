@@ -19,7 +19,7 @@ ChartJS.register(
   Legend
 );
 
-const BarChart = ({ data }: { data: { totalSales: number; title: string }[] }) => {
+const BarChart = ({ data }: { data: { _id: string; count: number }[] }) => {
   const options = {
     responsive: true,
     plugins: {
@@ -28,7 +28,7 @@ const BarChart = ({ data }: { data: { totalSales: number; title: string }[] }) =
       },
       title: {
         display: true,
-        text: 'Sales',
+        text: 'Age',
       },
       tooltip: {
         callbacks: {
@@ -36,7 +36,7 @@ const BarChart = ({ data }: { data: { totalSales: number; title: string }[] }) =
           label: (context: any) => {
             const dataIndex = context.dataIndex;
 
-            const label = data[dataIndex].title;
+            const label = data[dataIndex]._id;
             const value = context.dataset.data[dataIndex];
             return `${label}: ${value}`;
           },
@@ -45,18 +45,18 @@ const BarChart = ({ data }: { data: { totalSales: number; title: string }[] }) =
     },
     scales: {
       x: {
-        display: false,
+        //display: false,
       },
     },
   };
 
-  const labels = data.map((data) => data.title);
+  const labels = data.map((data) => data._id);
   const bardata = {
     labels,
     datasets: [
       {
-        label: 'Product wise sales',
-        data: data.map((data) => data.totalSales),
+        label: 'Age Distribution',
+        data: data.map((data) => data.count),
         backgroundColor: '#525CEB',
       },
     ],
