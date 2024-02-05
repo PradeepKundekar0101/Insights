@@ -62,7 +62,7 @@ const BarChart = ({ data,title,dataSetLabel }: { data: { value: number; label: s
     ],
   };
 
-  return  <div className=''><Bar options={options} data={bardata} /></div> 
+  return <Bar options={options} data={bardata} />
 };
 
 export default BarChart;

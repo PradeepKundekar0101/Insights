@@ -1,4 +1,4 @@
-"use client"
+
 import { MdAttachMoney } from "react-icons/md";
 import { FaCartShopping } from "react-icons/fa6";
 import { RiLoopLeftFill } from "react-icons/ri";
@@ -8,7 +8,6 @@ import { HiMiniDevicePhoneMobile } from "react-icons/hi2";
 import { TbCategoryFilled } from "react-icons/tb";
 import { FaStar } from "react-icons/fa";
 
-import CountUp from 'react-countup';
 import { NumberTransition } from "./numberTransition";
 
 const getLogo=(type:string)=>{
@@ -43,8 +42,8 @@ const card = ({label,value,type,symbol}:{label:string,value:number,symbol?:strin
     <div className="p-5 bg-slate-100 rounded shadow-md dark:bg-[#1a1c24]">
     <div className="text-base text-gray-400 dark:text-gray-300">{label}</div>
     <div className="flex items-center justify-between pt-1">
-        <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">  <NumberTransition enableScrollSpy end={value} duration={3} /> {symbol}</div>
-       {type && <span className="text-4xl dark:text-white bg-slate-800 rounded-full p-3">{getLogo(type)}</span>}
+        <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">  <NumberTransition end={value} duration={3} /> {symbol}</div>
+       {type && <span className="text-4xl dark:text-white bg-slate-300 dark:bg-slate-800 rounded-full p-3">{getLogo(type)}</span>}
     </div>
 </div>
   )

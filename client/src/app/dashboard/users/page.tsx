@@ -26,13 +26,13 @@ export default async function Home() {
       <h1 className="heading">Users Dashboard</h1>
       <div className="flex justify-between flex-wrap md:flex-nowrap mt-2 lg:mt-10  ">
         <div className="bg-slate-100  dark:bg-[#1a1c24] w-full md:w-[50%] mb-4 md:mb-0 px-2 rounded-md shadow-md">
-          <h1 className=" text-slate-300 text-2xl font-semibold m-2 mb-0">
+          <h1 className=" text-slate-800 dark:text-slate-300 text-2xl font-semibold m-2 mb-0">
             Age Distribution
           </h1>
           <BarChart data={usersAnalyticsData.ageDistribution} />
         </div>
-        <div className="bg-white dark:bg-[#1a1c24]  rounded-lg w-full md:w-[50%] lg:ml-2">
-          <h1 className=" text-slate-300 text-2xl font-semibold m-2 mb-0">
+        <div className="bg-slate-100 shadow-md dark:bg-[#1a1c24]  rounded-lg w-full md:w-[50%] lg:ml-2">
+          <h1 className=" text-slate-800 dark:text-slate-300 text-2xl font-semibold m-2 mb-0">
             Gender Distribution
           </h1>
           <PieChart data={usersAnalyticsData.genderDistribution} />

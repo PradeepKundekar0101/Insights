@@ -32,7 +32,7 @@ const page = async () => {
        <h1 className="heading">Products Dashboard</h1>
        <div className="flex justify-between flex-wrap md:flex-nowrap mt-2 lg:mt-10">
         <div className="bg-slate-100  dark:bg-[#1a1c24] w-full md:w-[50%] mb-4 md:mb-0 px-2 rounded-md shadow-md mt-4 lg:mt-0 lg:mr-3">
-        <h1 className=" text-slate-300 text-2xl font-semibold m-2 mb-0">Total Sales per Product</h1>
+        <h1 className="text-slate-800 dark:text-slate-300 text-2xl font-semibold m-2 mb-0">Total Sales per Product</h1>
           <BarChart
             data={barChartData}
             title="Stocks"
@@ -41,11 +41,12 @@ const page = async () => {
         </div>
       
         <div className="bg-slate-100  dark:bg-[#1a1c24] w-full md:w-[50%] mb-4 md:mb-0 px-2 rounded-md shadow-md mt-4 lg:mt-0">
-          <h1 className="text-slate-300 text-2xl font-semibold m-2 mb-4">Top 5 Best selling products</h1>
+          <h1 className="text-slate-800 dark:text-slate-300 text-2xl font-semibold m-2 mb-4">Top 5 Best selling products</h1>
           <table className=" w-full border-slate-600">
+            <tbody>
             {topSelling.map((e, ind) => {
               return (
-                <tr className=" rounded-full flex justify-between items-center hover:bg-slate-800 " key={ind}>
+                <tr className=" rounded-full flex justify-between items-center dark:hover:bg-slate-800 " key={ind}>
                   <td className="mb-3 flex items-center mr-4  ">
                     {" "}
                     <img
@@ -59,6 +60,7 @@ const page = async () => {
                 </tr>
               );
             })}
+            </tbody>
           </table>
         </div>
 
