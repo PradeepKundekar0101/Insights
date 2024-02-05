@@ -10,6 +10,7 @@ import {
     Tooltip,
     Legend,
   } from 'chart.js';
+  
   import { Line } from 'react-chartjs-2';
   ChartJS.register(
     CategoryScale,
@@ -30,7 +31,7 @@ const LineChart = ({ data }:{data:any}) => {
           },
           title: {
             display: true,
-            text: 'Chart.js Line Chart',
+            text: '',
           },
         },
       };

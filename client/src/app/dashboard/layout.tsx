@@ -15,7 +15,7 @@ const Layout = ({
 }) => {
     return (
             <div className='flex'>
-                <div className='h-screen bg-slate-50 shadow-md dark:bg-gray-950 w-[18vw]'>
+                <div className='h-screen bg-slate-50 shadow-md dark:bg-[#1a1c24] w-[18vw]'>
                     <Accordion type="single" className='h-full' collapsible>
                         <AccordionItem value="item-3">
                             <AccordionTrigger> <Link href={"/dashboard"}>Dashboard</Link></AccordionTrigger>
@@ -41,7 +41,7 @@ const Layout = ({
                     </Accordion>
                 </div>
                 <div className='w-full max-h-screen overflow-y-auto'>
-                    <nav className='bg-slate-100 shadow-md dark:bg-gray-950 fixed top-0 w-[83.7vw] flex justify-end z-[1000] text-white p-2'>
+                    <nav className='bg-slate-100 shadow-md dark:bg-[#1a1c24] fixed top-0 w-[83.7vw] flex justify-end z-[1000] text-white p-2'>
                         <ModeToggle/>
                     </nav>
                     <div>

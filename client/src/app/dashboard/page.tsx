@@ -12,25 +12,27 @@ const Page = async() =>{
     const barChartData = salesData.salesPerProduct.map((e)=>{return {label:e.title,value:e.totalSales}});
     const monthWiseSales = salesData.monthWiseSales;
 
-    return   <div className="container max-w-6xl px-5 py-10  text-slate-800 ">
-          <div>
-        <MonthlySalesGraph data={monthWiseSales}/>
-      </div>
+    return   <section className="container max-w-6xl px-5 py-10  text-slate-800 ">
+
+     
+
       <h1 className="text-slate-800 dark:text-white font-bold text-3xl py-5">Sales Dashboard</h1>
       <div className="grid gap-7 sm:grid-cols-2 lg:grid-cols-4">
-      <Card value={"$"+salesData.totalSales} label={"Total Sales"}/>
-      <Card value={"$"+salesData.totalDiscountedSales} label={"Discounted Sales"}/>
-      <Card value={""+salesData.totalOrders} label={"Total Orders"}/>
-      <Card value={"$"+salesData.averageOrderValue} label={"Average Order Value"}/>
-      <Card value={"$"+salesData.netSales} label={"Net Sales"}/>
-      <Card value={String(salesData.conversionRate).slice(0,4)+" %"} label={"Conversion rate"}/>
+      <Card type="money" value={salesData.totalSales} label={"Total Sales"} symbol="$"/>
+      <Card type="money" value={salesData.totalDiscountedSales} label={"Discounted Sales"} symbol="$"/>
+      <Card type="order" value={salesData.totalOrders} label={"Total Orders"}/>
+      <Card type="money" value={salesData.averageOrderValue} label={"Average Order Value"} symbol="$"/>
+      <Card type="money" value={salesData.netSales} label={"Net Sales"} symbol="$"/>
+      <Card type="conversion" value={Number(String(salesData.conversionRate).slice(0,4))} symbol="%" label={"Conversion rate"}/>
     </div>
-    
-    <div className="bg-slate-100 dark:bg-gray-800 my-10 px-2 rounded-md shadow-md">
-    <h1 className=" text-slate-800 dark:text-white font-bold text-3xl py-5">Total Sales per Product</h1>
-    <BarChart data={barChartData} title="Sales" dataSetLabel="Total Sales per product"/>
+    <div className="flex justify-between mt-10">
+    <div className="bg-slate-100  dark:bg-[#1a1c24] w-[50%]  px-2 rounded-md shadow-md">
+      <h1 className=" text-slate-300 text-2xl font-semibold m-2 mb-0">Total Sales per Product</h1>
+      <BarChart data={barChartData} title="Sales" dataSetLabel="Total Sales per product"/>
+    </div>
+    <MonthlySalesGraph data={monthWiseSales}/>
     </div>
 
-    </div>
+    </section>
   }
   export default Page

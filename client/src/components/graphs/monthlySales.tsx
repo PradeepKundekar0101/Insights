@@ -27,15 +27,22 @@ const MonthlySales = ({ data }: { data: { _id: number; sales: { k: number; v: nu
     }, [currYear, data]);
   
     return (
-      <div className='bg-white dark:bg-slate-800 mt-10'>
-        <select value={currYear} onChange={(e) => setCurYear(Number(e.target.value))}>
-          {years.map((year, ind) => (
-            <option key={ind} value={ind}>
-              {year}
-            </option>
-          ))}
-        </select>
-        <LineChart data={graphData} />
+      <div className='bg-white dark:bg-[#1a1c24]  rounded-lg w-[50%] mx-2'>
+        <div className='flex justify-between'>
+          <h1 className='text-slate-300 text-2xl font-semibold m-2 mb-0'>Monthly Sales</h1>
+          <select className='py-2  rounded-md  m-2 px-4 bg-[rgb(75, 192, 192)] dark:text-white' value={currYear} onChange={(e) => setCurYear(Number(e.target.value))}>
+            {years.map((year, ind) => (
+              <option key={ind} value={ind}>
+                {year}
+              </option>
+            ))}
+          </select>
+        </div>
+       
+        <div className=''>
+          <LineChart data={graphData} />
+        </div>
+     
       </div>
     );
   };
