@@ -1,5 +1,5 @@
 "use client"
-
+import Image from "next/image"
 import { ColumnDef,} from "@tanstack/react-table"
 import { MoreHorizontal,ArrowUpDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -27,7 +27,7 @@ export const columns: ColumnDef<User>[] = [
     accessorKey: "image",
     header: "Profile",
     cell: ({ row }) => {
-      return <img className="h-10 w-10 rounded-full" src={row.getValue("image")}/>
+      return <Image alt="" className="h-10 w-10 rounded-full" src={row.getValue("image")}/>
     },
   },
   {
