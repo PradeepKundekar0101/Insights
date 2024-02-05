@@ -7,6 +7,9 @@ const app_1 = require("./app");
 const dotenv_1 = __importDefault(require("dotenv"));
 const db_1 = require("./db");
 dotenv_1.default.config();
+function getRandomDate(start, end) {
+    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+}
 const PORT = process.env.PORT || 8000;
 (0, db_1.connectDB)().then(() => {
     app_1.app.listen(PORT, () => {

@@ -20,6 +20,10 @@ const OrderSchema = new mongoose_1.Schema({
     userId: { type: Number, required: true },
     totalProducts: { type: Number, required: true },
     totalQuantity: { type: Number, required: true },
+    date: {
+        type: Date,
+        required: false
+    }
 });
 const Order = (0, mongoose_1.model)('Order', OrderSchema);
 exports.default = Order;

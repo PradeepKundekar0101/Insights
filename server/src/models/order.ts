@@ -17,6 +17,7 @@ interface IOrderItem extends Document {
   userId: number;
   totalProducts: number;
   totalQuantity: number;
+  date:Date;
 }
 
 const OrderSchema = new Schema<IOrderItem>({
@@ -38,6 +39,10 @@ const OrderSchema = new Schema<IOrderItem>({
   userId: { type: Number, required: true },
   totalProducts: { type: Number, required: true },
   totalQuantity: { type: Number, required: true },
+  date:{
+    type:Date,
+    required:false
+  }
 });
 
 

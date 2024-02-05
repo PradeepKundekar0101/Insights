@@ -55,11 +55,22 @@ export const getProductAnalytics = asyncHandler(async(req:Request,res:Response)=
       },{
         $count:"totalCategories"
       }]);
+      const averageRating = await Product.aggregate([
+        {
+          $group:{
+            _id:null,
+            averageRating:{
+              $avg:"$rating"
+            }
+          }
+        }
+      ])
       const analytics = {
         topFiveSellingProducts,
         productsByStocks,
         totalProducts,
-        totalCategories:totalCategories[0].totalCategories
+        totalCategories:totalCategories[0].totalCategories,
+        averageRating:averageRating[0].averageRating
       }
     return res.status(200).json(new ApiResponse(200,"Product analytics",analytics,true));
 })

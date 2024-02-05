@@ -6,6 +6,10 @@ import Product from './models/product';
 import Order from './models/order';
 
 dotenv.config();
+function getRandomDate(start:Date, end:Date) {
+    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+  }
+  
 
 const PORT = process.env.PORT || 8000;
 connectDB().then(()=>{

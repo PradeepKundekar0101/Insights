@@ -48,6 +48,7 @@ interface ProductData {
   productsByStocks: ProductByStock[];
   totalProducts: number;
   totalCategories: number;
+  averageRating:number;
 }
 
 export default ProductData;

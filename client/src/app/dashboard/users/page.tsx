@@ -1,7 +1,7 @@
 
-import BarChart from "../../../components/ui/ageBarChart";
+import BarChart from "../../../components/graphs/ageBarChart";
 import Card from "../../../components/ui/card";
-import PieChart from "../../../components/ui/pieChart";
+import PieChart from "../../../components/graphs/pieChart";
 import { UserData } from "../../../types/Analytics";
 const fetchUserAnalytics =async ()=>{
   const response = await fetch("http://localhost:8000/api/v1/users/analytics");
