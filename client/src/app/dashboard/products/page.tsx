@@ -1,5 +1,6 @@
 import ProductData from "../../../types/Analytics";
 import Card from "../../../components/ui/card";
+import Image from "next/image";
 import BarChart from "../../../components/graphs/barChart";
 import { Product, columns } from "./columns";
 import { DataTable } from "./data-table";
@@ -49,7 +50,7 @@ const page = async () => {
                 <tr className=" rounded-full flex justify-between items-center dark:hover:bg-slate-800 " key={ind}>
                   <td className="mb-3 flex items-center mr-4  ">
                     {" "}
-                    <img
+                    <Image
                       src={e.thumbnail}
                       alt="product"
                       className="w-12 mr-2 rounded-full h-12"
