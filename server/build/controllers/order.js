@@ -28,55 +28,55 @@ exports.getAllOrderAnalytics = (0, asyncHandler_1.asyncHandler)((req, res) => __
             $group: {
                 _id: null,
                 totalSales: {
-                    $sum: "$total"
-                }
-            }
-        }
+                    $sum: "$total",
+                },
+            },
+        },
     ]);
     const totalDiscountedSales = yield order_2.default.aggregate([
         {
             $group: {
                 _id: null,
                 totalDiscountedSales: {
-                    $sum: "$discountedTotal"
-                }
-            }
-        }
+                    $sum: "$discountedTotal",
+                },
+            },
+        },
     ]);
     const totalOrders = yield order_2.default.aggregate([
         {
             $group: {
                 _id: null,
                 totalOrders: {
-                    $sum: 1
-                }
-            }
-        }
+                    $sum: 1,
+                },
+            },
+        },
     ]);
     const averageOrderValue = yield order_2.default.aggregate([
         {
             $group: {
                 _id: null,
                 averageOrderValue: {
-                    $avg: "$total"
-                }
-            }
-        }
+                    $avg: "$total",
+                },
+            },
+        },
     ]);
     const totalUniqueOrders = yield order_2.default.aggregate([
         {
             $group: {
                 _id: "$userId",
-            }
+            },
         },
         {
-            $count: 'totalUniqueOrders'
-        }
+            $count: "totalUniqueOrders",
+        },
     ]);
     const totalUsers = yield user_1.default.countDocuments();
     const salesPerProduct = yield order_2.default.aggregate([
         {
-            $unwind: "$products"
+            $unwind: "$products",
         },
         {
             $group: {
@@ -85,13 +85,33 @@ exports.getAllOrderAnalytics = (0, asyncHandler_1.asyncHandler)((req, res) => __
                     $sum: "$total",
                 },
                 title: {
-                    $first: "$products.title"
-                }
-            }
+                    $first: "$products.title",
+                },
+            },
         },
         {
             $sort: {
-                "totalSales": 1
+                totalSales: 1,
+            },
+        },
+    ]);
+    const monthWiseSales = yield order_2.default.aggregate([
+        {
+            $group: {
+                _id: {
+                    year: { $year: "$date" },
+                    month: {
+                        $month: "$date"
+                    }
+                },
+                totalSales: { $sum: "$total" },
+            }
+        }, {
+            $group: {
+                _id: "$_id.year",
+                sales: {
+                    $push: { k: "$_id.month", v: "$totalSales" }
+                }
             }
         }
     ]);
@@ -101,7 +121,10 @@ exports.getAllOrderAnalytics = (0, asyncHandler_1.asyncHandler)((req, res) => __
         totalOrders: totalOrders[0].totalOrders,
         averageOrderValue: averageOrderValue[0].averageOrderValue,
         conversionRate: (totalUniqueOrders[0].totalUniqueOrders / totalUsers) * 100,
-        salesPerProduct
+        salesPerProduct,
+        monthWiseSales,
     };
-    return res.status(200).json(new ApiResponse_1.ApiResponse(200, "carts", Object.assign(Object.assign({}, analytics), { netSales: analytics.totalSales - analytics.totalDiscountedSales }), true));
+    return res
+        .status(200)
+        .json(new ApiResponse_1.ApiResponse(200, "carts", Object.assign(Object.assign({}, analytics), { netSales: analytics.totalSales - analytics.totalDiscountedSales }), true));
 }));
