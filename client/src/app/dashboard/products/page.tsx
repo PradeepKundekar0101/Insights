@@ -1,18 +1,30 @@
 import ProductData from "../../../types/Analytics";
 import Card from "../../../components/ui/card";
 import BarChart from "../../../components/graphs/barChart";
+import { Product, columns } from "./columns";
+import { DataTable } from "./data-table";
+import {server} from "@/config/server"
 const fetchProductAnalytics = async () => {
   const response = await fetch(
-    "http://localhost:8000/api/v1/products/analytics",
+    `${server.url}/api/v1/products/analytics`,
+    { next: { revalidate: 0 } }
+  );
+  return await response.json();
+};
+const fetchProduct = async () => {
+  const response = await fetch(
+    `${server.url}/api/v1/products`,
     { next: { revalidate: 0 } }
   );
   return await response.json();
 };
 const page = async () => {
   const data = await fetchProductAnalytics();
-  const productData: ProductData = data.data;
-  const topSelling = productData.topFiveSellingProducts;
-  const barChartData = productData.productsByStocks.map((e) => {
+  const prodData =await fetchProduct();
+  const productAnalyticsData: ProductData = data.data;
+  const productData:Product[] = prodData.data;
+  const topSelling = productAnalyticsData.topFiveSellingProducts;
+  const barChartData = productAnalyticsData.productsByStocks.map((e) => {
     return { label: e.title, value: e.stock };
   });
   return (
@@ -53,20 +65,20 @@ const page = async () => {
        </div>
 
           <div className="gap-7 mt-4 grid sm:grid-cols-1 lg:grid-cols-2">
-            <Card type="product" value={productData.totalProducts} label="Total Products" />
+            <Card type="product" value={productAnalyticsData.totalProducts} label="Total Products" />
             <Card
               type="category"
-              value={productData.totalCategories}
+              value={productAnalyticsData.totalCategories}
               label="Total Categories"
             />
               <Card
               type="rating"
-              value={Number(String(productData.averageRating).slice(0,4))}
+              value={Number(String(productAnalyticsData.averageRating).slice(0,4))}
               label="Average Rating"
               symbol=" /5"
             />
           </div>
-
+          <DataTable columns={columns} data={productData} />
      
  
 

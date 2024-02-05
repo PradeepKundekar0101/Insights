@@ -26,7 +26,7 @@ export const columns: ColumnDef<Product>[] = [
     accessorKey: "thumbnail",
     header: "Image",
     cell: ({ row }) => {
-      return <img className="h-10 w-10 rounded-full" src={row.getValue("image")}/>
+      return <img className="h-10 w-10 rounded-full" src={row.getValue("thumbnail")}/>
     },
   },
   {

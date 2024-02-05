@@ -10,7 +10,6 @@ const Layout = ({
 }) => {
     return (
             <div className='flex'>
-              
                 <div className='h-screen bg-slate-50 shadow-md dark:bg-[#1a1c24] w-[18vw] flex flex-col'>
                     <h1 className='logo'>INSIGHTS</h1>
                     <div className='links-container flex flex-col items-start pl-4 my-4'>

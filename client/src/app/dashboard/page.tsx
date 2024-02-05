@@ -2,9 +2,10 @@ import Card from "../../components/ui/card";
 import BarChart from "../../components/graphs/barChart";
 import { SalesData } from "../../types/Analytics";
 import MonthlySalesGraph from "@/components/graphs/monthlySales";
+import { server } from "@/config/server";
 const fetchSalesAnalytics = async () => {
   const response = await fetch(
-    "http://localhost:8000/api/v1/orders/analytics",
+    `${server.url}/api/v1/orders/analytics`,
     { next: { revalidate: 0 } }
   );
   return await response.json();

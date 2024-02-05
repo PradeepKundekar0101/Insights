@@ -4,13 +4,14 @@ import PieChart from "../../../components/graphs/pieChart";
 import { UserData } from "../../../types/Analytics";
 import { User, columns } from "./columns"
 import { DataTable } from "./data-table"
+import { server } from "@/config/server";
 
 const fetchUserAnalytics = async () => {
-  const response = await fetch("http://localhost:8000/api/v1/users/analytics");
+  const response = await fetch(`${server.url}/api/v1/users/analytics`);
   return await response.json();
 };
 const fetchUsers = async () => {
-  const response = await fetch("http://localhost:8000/api/v1/users/",{next:{revalidate:0}});
+  const response = await fetch(`${server.url}/api/v1/users/`,{next:{revalidate:0}});
   return await response.json();
 };
 
