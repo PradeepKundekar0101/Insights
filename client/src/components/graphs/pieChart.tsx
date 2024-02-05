@@ -24,6 +24,6 @@ ChartJS.register(ArcElement, Tooltip, Legend);
           },
         ],
       };
-  return <Doughnut data={Piedata} />;
+  return  <div className='w-[50%] mx-auto'> <Doughnut data={Piedata} /></div>;
 }
 export default PieChart;

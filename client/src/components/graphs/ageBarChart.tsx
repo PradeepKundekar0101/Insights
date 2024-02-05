@@ -62,7 +62,7 @@ const BarChart = ({ data }: { data: { _id: string; count: number }[] }) => {
     ],
   };
 
-  return <Bar options={options} data={bardata} />;
+  return <div ><Bar options={options} data={bardata} /></div>;
 };
 
 export default BarChart;

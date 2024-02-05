@@ -27,7 +27,7 @@ const MonthlySales = ({ data }: { data: { _id: number; sales: { k: number; v: nu
     }, [currYear, data]);
   
     return (
-      <div className='bg-white dark:bg-[#1a1c24]  rounded-lg w-[50%] mx-2'>
+      <div className='bg-slate-100  dark:bg-[#1a1c24] w-full md:w-[50%] mb-4 md:mb-0 px-2 rounded-md shadow-md mt-4 lg:mt-0'>
         <div className='flex justify-between'>
           <h1 className='text-slate-300 text-2xl font-semibold m-2 mb-0'>Monthly Sales</h1>
           <select className='py-2  rounded-md  m-2 px-4 bg-[rgb(75, 192, 192)] dark:text-white' value={currYear} onChange={(e) => setCurYear(Number(e.target.value))}>
