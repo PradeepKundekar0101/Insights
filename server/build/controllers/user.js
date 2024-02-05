@@ -18,7 +18,7 @@ const user_1 = __importDefault(require("../models/user"));
 const ApiResponse_1 = require("../utils/ApiResponse");
 // import aggregrationPipe from "../services/pipelines/userAnalytics";
 exports.getAllUsers = (0, asyncHandler_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const users = yield user_1.default.find();
+    const users = yield user_1.default.find().select("firstName lastName email phone image age gender");
     return res.status(200).json(new ApiResponse_1.ApiResponse(200, "users", users, true));
 }));
 exports.getUserAnalytics = (0, asyncHandler_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {

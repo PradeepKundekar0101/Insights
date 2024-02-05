@@ -10,6 +10,10 @@ export interface SalesData {
         title: string;
       }>;
       netSales: number;
+      monthWiseSales:Array<{
+        _id:number,
+        sales:{k:number,v:number}[],
+      }>
 }
 
 interface GenderDistribution {
@@ -48,6 +52,7 @@ interface ProductData {
   productsByStocks: ProductByStock[];
   totalProducts: number;
   totalCategories: number;
+  averageRating:number;
 }
 
 export default ProductData;
