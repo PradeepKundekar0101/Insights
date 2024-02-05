@@ -95,7 +95,7 @@ exports.getAllOrderAnalytics = (0, asyncHandler_1.asyncHandler)((req, res) => __
             },
         },
     ]);
-    const monthWiseSales = yield order_2.default.aggregate([
+    let monthWiseSales = yield order_2.default.aggregate([
         {
             $group: {
                 _id: {
@@ -106,15 +106,37 @@ exports.getAllOrderAnalytics = (0, asyncHandler_1.asyncHandler)((req, res) => __
                 },
                 totalSales: { $sum: "$total" },
             }
-        }, {
+        },
+        {
+            $addFields: {
+                month: "$_id.month"
+            }
+        },
+        {
+            $sort: {
+                month: 1
+            }
+        },
+        {
             $group: {
                 _id: "$_id.year",
                 sales: {
-                    $push: { k: "$_id.month", v: "$totalSales" }
+                    $push: { k: "$month", v: "$totalSales" }
                 }
             }
-        }
+        },
     ]);
+    // Add missing months
+    monthWiseSales.map((year) => {
+        let cur = 1;
+        while (cur <= 12) {
+            if (!year.sales.find((e) => e.k === cur)) {
+                year.sales.push({ k: cur, v: 0 });
+            }
+            cur++;
+        }
+        year.sales.sort((a, b) => a.k - b.k);
+    });
     const analytics = {
         totalSales: totalSales[0].totalSales,
         totalDiscountedSales: totalDiscountedSales[0].totalDiscountedSales,
