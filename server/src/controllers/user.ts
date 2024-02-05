@@ -5,7 +5,7 @@ import { ApiResponse } from "../utils/ApiResponse";
 // import aggregrationPipe from "../services/pipelines/userAnalytics";
 
 export const getAllUsers = asyncHandler(async(req:Request,res:Response)=>{
-    const users = await User.find();
+    const users = await User.find().select("firstName lastName email phone image age gender");
     return res.status(200).json(new ApiResponse(200,"users",users,true));
 })
 

@@ -6,7 +6,7 @@ import { ApiResponse } from "../utils/ApiResponse";
 import Order from "../models/order";
 
 export const getAllProducts = asyncHandler(async(req:Request,res:Response)=>{
-    const products = await Product.find();
+    const products = await Product.find().select("title brand stock price thumbnail category");
     return res.status(200).json(new ApiResponse(200,"users",products,true));
 })
 
