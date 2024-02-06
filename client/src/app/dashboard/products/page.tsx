@@ -50,7 +50,7 @@ const page = async () => {
                 <tr className=" rounded-full flex justify-between items-center dark:hover:bg-slate-800 " key={ind}>
                   <td className="mb-3 flex items-center mr-4  ">
                     {" "}
-                    <Image
+                    <img
                       src={e.thumbnail}
                       alt="product"
                       className="w-12 mr-2 rounded-full h-12"
